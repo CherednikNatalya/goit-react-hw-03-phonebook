@@ -17,8 +17,6 @@ export class Form extends Component {
     this.setState({ [name]: value });
   };
 
-
-
     handleSubmit = event => {
         event.preventDefault()
         const { name, number } = this.state;

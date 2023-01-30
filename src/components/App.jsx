@@ -15,6 +15,24 @@ export class App extends Component {
     number: ''
   }
 
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.state.contacts.length !== prevState.contacts.length){
+      localStorage.setItem('contacts' , JSON.stringify(this.state.contacts))
+    }
+  }
+
+  componentDidMount () {
+    const contacts = localStorage.getItem('contacts')
+    const parseContacts = JSON.parse(contacts)
+
+    if (parseContacts){
+      this.setState({contacts: parseContacts})
+    }
+  }
+
+
+
   isContactInState = ({ name, number }) =>
   !!this.state.contacts.filter(({ name: prevName, number: prevNumber }) => {
     return prevName === name && prevNumber === number;
@@ -30,6 +48,10 @@ handleSubmitForm = ({ name, number }) => {
     contacts: [...prevContacts, { id: nanoid(), name, number }],
   }));
 };
+
+
+
+
 
 handleFilterChange = evt => {
   this.setState({ filter: evt.currentTarget.value });
